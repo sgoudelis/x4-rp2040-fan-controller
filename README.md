@@ -8,10 +8,11 @@ system.
 **Status: tested on one X4.** The full-on image spins the fan, the sensor probe
 reads valid HAT temperatures, and the controller runs without a host service.
 The fan was observed to slow down at 80% duty; a 55% stage was reported as
-much better. The current firmware reduces duty to 40% through 49.9 °C to
-favor quiet operation at the observed HAT temperature. Physical response at
-40%, the 75% stage, threshold transitions, and behavior after a full power
-cycle have not yet been checked.
+much better. The current firmware uses a further-quieted curve with thresholds
+shifted to 42/48/53/58 °C and duties 0/40/60/80/100%, favoring quiet
+operation at the observed HAT temperature. Physical response at the 60% and
+80% stages, threshold transitions, and behavior after a full power cycle have
+not yet been checked.
 
 ## What it does
 
@@ -34,18 +35,19 @@ for a bounded interval and exits normally. Identify `PORT` with
 
 | HAT sensor temperature | Commanded fan duty |
 | --- | ---: |
-| Below 38 °C | 0% |
-| 38–49.9 °C | 40% |
-| 50–54.9 °C | 75% |
-| 55 °C and above | 100% |
+| Below 42 °C | 0% |
+| 42–47.9 °C | 40% |
+| 48–52.9 °C | 60% |
+| 53–57.9 °C | 80% |
+| 58 °C and above | 100% |
 | Sensor missing, CRC error, or implausible reading | 100% |
 
 The table shows thresholds when temperature rises; a stage steps down 2 °C
 below its threshold to avoid frequent switching. The HAT sensor measures its
 own location, **not the Intel N100 CPU**. The stock fan has no tachometer
 connection, so percentages are commands rather than measured RPM. The earlier
-55% and 80% stages were assessed on the test X4; the new 40% stage requires physical
-validation on each fan.
+55% and 80% stages were assessed on the test X4; the 40% midrange and the new
+60%/80% stages require physical validation on each fan.
 
 ## Build
 

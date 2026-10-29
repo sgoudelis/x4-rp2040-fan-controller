@@ -18,8 +18,8 @@
 
 // A quiet helper-fan curve for temperature measured *on the HAT*, not the CPU.
 // Escalation thresholds for stages 1..4. De-escalation has 2 C hysteresis.
-static const int16_t stage_threshold_c[4] = {38, 45, 50, 55};
-static const uint8_t stage_fan_percent[5] = {0, 40, 40, 75, 100};
+static const int16_t stage_threshold_c[4] = {42, 48, 53, 58};
+static const uint8_t stage_fan_percent[5] = {0, 40, 60, 80, 100};
 
 static void fan_set_percent(uint8_t percent) {
     if (percent > 100u) percent = 100u;
